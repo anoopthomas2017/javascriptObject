@@ -1,0 +1,85 @@
+//Challenge Project: Mysterious Organism
+// Returns a random DNA base
+const returnRandBase = () => {
+  const dnaBases = ['A', 'T', 'C', 'G']
+  return dnaBases[Math.floor(Math.random() * 4)] 
+}
+
+// Returns a random single strand of DNA containing 15 bases
+const mockUpStrand = () => {
+  const newStrand = []
+  for (let i = 0; i < 15; i++) {
+    newStrand.push(returnRandBase())
+  }
+  return newStrand
+}
+
+const pAequorFactory=(specimenNum,dna)=>{
+  return{
+    specimenNum,
+    dna,
+    mutate(){
+      let mSpecimenNum=returnRandBase()
+      while(mSpecimenNum===this.specimenNum){
+        mSpecimenNum=returnRandBase()
+      }
+      this.specimenNum=mSpecimenNum
+    },
+    compareDNA(pAequor){
+      console.log('==============pAequor==================')
+      let common=0;
+      for(let i=0;i<=pAequor.length-1;i++){
+        if(pAequor[i]===this.dna[i]){
+          common++
+        }
+
+      }
+      let match=(common/pAequor.length)*100
+      match=Math.floor(match)
+      console.log(
+      `specimen #1 and specimen #2 have ${match}% DNA in common`)
+    },
+    willLikelySurvive(){
+      //console.log('==============willLikelySurvive==================')
+     let will=this.dna.filter(item=>item.includes('C')|| item.includes('G') )
+     //console.log(will)
+     let match=Math.floor((will.length/this.dna.length)*100)
+     //console.log(match)
+     if(match>=60){
+       return true
+     }
+     else{
+       return false
+     }
+    }
+  }
+}
+// let a=returnRandBase()
+// let b=mockUpStrand()
+const ex1=pAequorFactory(returnRandBase(),mockUpStrand())
+const ex2=pAequorFactory(returnRandBase(),mockUpStrand())
+1
+console.log('==============ex1==================')
+console.log(ex1.dna)
+console.log('==============ex2==================')
+console.log(ex2.dna)
+ex1.compareDNA(ex2.dna)
+console.log(ex2.willLikelySurvive())
+const pAequor=()=>{
+  teamPaequor=[]
+  while(teamPaequor.length<30){
+    let team=pAequorFactory(returnRandBase(),mockUpStrand()) 
+    if(team.willLikelySurvive()){
+       teamPaequor.push(team) 
+    }
+   
+   //console.log(teamPaequor.length)
+  }
+
+return teamPaequor
+}
+console.log(pAequor())
+
+
+
+
